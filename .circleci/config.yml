@@ -40,8 +40,8 @@ jobs:
       - run: npm run test
   deploy:
     executor: heroku/default
-    stes:
-      - checkout
+    steps:
+      - checkout:
         path: ~/repo
       - heroku/install
       - run:
