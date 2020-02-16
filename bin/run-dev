@@ -1,0 +1,6 @@
+#!/bin/bash
+
+set -e
+
+cd client && npm start &
+cd api && npm start &
