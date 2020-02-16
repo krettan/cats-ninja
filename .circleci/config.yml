@@ -2,7 +2,7 @@
 #
 # Check https://circleci.com/docs/2.0/language-javascript/ for more details
 #
-version: 2
+version: 2.1
 orbs:
   heroku: circleci/heroku@1.0.1
 
@@ -21,21 +21,21 @@ jobs:
 
     steps:
       - checkout:
-        path: ~/repo
+          path: ~/repo
 
       # Download and cache dependencies
       - restore_cache:
-        keys:
-          - v1-dependencies-{{ checksum "package.json" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
 
       - run: npm install --silent
 
       - save_cache:
-        paths:
-          - node_modules
-        key: v1-dependencies-{{ checksum "package.json" }}
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
 
       # run tests!
       - run: npm run test
@@ -45,10 +45,8 @@ jobs:
       - checkout:
           path: ~/repo
       - heroku/install
-      - run:
-          command: >
-            cd client && ../bin/deploy ${HEROKU_CLIENT_APP_NAME}
-            cd api && ../bin/deploy ${HEROKU_API_APP_NAME}
+      - run: cd client && ../bin/deploy ${HEROKU_CLIENT_APP_NAME}
+      - run: cd api && ../bin/deploy ${HEROKU_API_APP_NAME}
 workflows:
   heroku_deploy:
     jobs:
