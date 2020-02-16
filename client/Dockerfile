@@ -1,19 +1,17 @@
-FROM node:10
-
+# build environment
+FROM node:10 as build
 # Create app directory
-WORKDIR /usr/src/app
-
-# Install app dependencies
-# A wildcard is used to ensure both package.json AND package-lock.json are copied
-# where available (npm@5+)
-COPY package*.json ./
-
-RUN npm install
-# If you are building your code for production
-# RUN npm ci --only=production
-
-# Bundle app source
+WORKDIR /app
+ENV PATH /app/node_modules/.bin:$PATH
+COPY package.json /app/package.json
+RUN npm install --silent
 COPY . .
 
-EXPOSE 3000
-CMD ["npm", "start"]
+# If you are building your code for production
+RUN npm run build
+
+# production environment
+FROM nginx:1.16.0-alpine
+COPY --from=build /app/build /etc/nginx/html
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+CMD sed -i -e 's/$PORT/'"$PORT"'/g' /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'

@@ -9,7 +9,7 @@ class App extends Component {
   }
   
   componentDidMount() {
-    fetch('http://localhost:9000/predictions')
+    fetch('http://cats-ninja-api.herokuapp.com/predictions')
       .then(res => res.json())
       .then((data) => {
         this.setState({ predictions: data })
