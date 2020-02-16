@@ -49,6 +49,7 @@ jobs:
             cd client && ../bin/deploy ${HEROKU_CLIENT_APP_NAME}
             cd api && ../bin/deploy ${HEROKU_API_APP_NAME}
 workflows:
+  version: 2
   heroku_deploy:
     jobs:
       - test
