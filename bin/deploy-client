@@ -1,0 +1,6 @@
+#!/bin/bash
+
+
+heroku container:push web --app cats-ninja-client
+heroku container:release web --app cats-ninja-client
+heroku logs --tail --app cats-ninja-client
