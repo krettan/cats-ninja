@@ -42,7 +42,7 @@ jobs:
     executor: heroku/default
     steps:
       - checkout:
-        path: ~/repo
+          path: ~/repo
       - heroku/install
       - run:
           command: >
