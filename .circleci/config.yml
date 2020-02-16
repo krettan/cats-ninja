@@ -40,6 +40,9 @@ jobs:
       # run tests!
       - run: npm run test
   deploy:
+    branches:
+      only:
+        - master
     executor: heroku/default
     working_directory: ~/repo/
     steps:
