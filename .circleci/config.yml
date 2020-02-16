@@ -46,6 +46,8 @@ jobs:
       - checkout:
           path: ~/repo
       - heroku/install
+      - setup_remote_docker:
+          docker_layer_caching: true
       - run: cd client && ../bin/deploy ${HEROKU_CLIENT_APP_NAME}
       - run: cd api && ../bin/deploy ${HEROKU_API_APP_NAME}
 workflows:
